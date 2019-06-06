@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+
 func TestParseSize(t *testing.T) {
 	r, err := xrandr.ParseSize("3000x1200")
 	assert.NoError(t, err)
@@ -20,6 +21,12 @@ func TestParseSize(t *testing.T) {
 
 	r, err = xrandr.ParseSize("\n3000 1200   \t")
 	assert.Error(t, err)
+	
+	
+	r, err = xrandr.ParseSize("1920x1080i")
+	assert.NoError(t, err)
+        assert.Equal(t, float32(1920), r.Width)
+        assert.Equal(t, float32(1080), r.Height)
 }
 
 func TestParseSizeWithPosition(t *testing.T) {

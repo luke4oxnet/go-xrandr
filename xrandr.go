@@ -219,7 +219,6 @@ func parseScreenLine(line string) (*Screen, error) {
 		}
 		s = strings.Replace(s, typ, "", -1)
 		s = strings.TrimSpace(s)
-		s = strings.Replace(s, "i", "", -1)
 		resolution, err := parseSize(s)
 		if err != nil {
 			return nil, fmt.Errorf("error parsing %s screen resolution: %s", typ, err)
@@ -336,6 +335,8 @@ func parseSize(s string) (*Size, error) {
 	if !strings.Contains(s, "x") {
 		return nil, fmt.Errorf("invalid size format; expected format WxH but got %s", s)
 	}
+	
+	s = strings.Replace(s, "i", "", -1)
 
 	res := strings.Split(s, "x")
 	width, err := strconv.Atoi(strings.TrimSpace(res[0]))
