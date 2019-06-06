@@ -219,6 +219,7 @@ func parseScreenLine(line string) (*Screen, error) {
 		}
 		s = strings.Replace(s, typ, "", -1)
 		s = strings.TrimSpace(s)
+		s = strings.Replace(s, "i", "", -1)
 		resolution, err := parseSize(s)
 		if err != nil {
 			return nil, fmt.Errorf("error parsing %s screen resolution: %s", typ, err)
