@@ -34,6 +34,7 @@ type RefreshRate struct {
 
 // Mode xrandr output mode
 type Mode struct {
+	Name	     string
 	Resolution   Size
 	RefreshRates []RefreshRate
 }
@@ -315,7 +316,7 @@ func parseModeLine(line string) (*Mode, error) {
 			if err != nil {
 				return nil, err
 			}
-
+			mode.Name = w
 			mode.Resolution = *res
 			continue
 		}
