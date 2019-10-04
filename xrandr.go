@@ -1,3 +1,4 @@
+
 package xrandr
 
 import (
@@ -320,7 +321,11 @@ func parseModeLine(line string) (*Mode, error) {
 			mode.Resolution = *res
 			continue
 		}
-
+		if w == "+" {
+			continue
+		}
+		
+		
 		rate, err := parseRefreshRate(w)
 		if err != nil {
 			return nil, err
@@ -392,6 +397,8 @@ func parseRefreshRate(s string) (*RefreshRate, error) {
 	preferred := strings.Contains(s, "+")
 
 	s = strings.TrimSpace(strings.Trim(s, "*+ "))
+//	fmt.Printf("rate value: %s\n", s); 
+	
 	value, err := strconv.ParseFloat(s, 32)
 	if err != nil {
 		return nil, fmt.Errorf("invalid rate value (%s): %s", s, err)
