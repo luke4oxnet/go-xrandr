@@ -49,6 +49,7 @@ type Monitor struct {
 	Connected  bool
 	Resolution Size
 	Position   Position
+	Rotation   string
 }
 
 // Screen all the info of xrandr screen
@@ -295,6 +296,15 @@ func parseMonitorLine(line string) (*Monitor, error) {
 		return nil, fmt.Errorf("could not determine monitor resolution and position: %s", err)
 	}
 
+	re = regexp.MustCompile(`\+\d+\+\d+\s(?P<value>[a-z]+)\s\(`)
+	loc := re.FindStringSubmatch(tokens[1])
+	
+	if len(loc) == 2 {
+		monitor.Rotation = loc[1]
+	} else {
+		monitor.Rotation = "normal"
+	}
+	
 	monitor.Connected = true
 	monitor.Primary = primary
 	monitor.Size = *size
